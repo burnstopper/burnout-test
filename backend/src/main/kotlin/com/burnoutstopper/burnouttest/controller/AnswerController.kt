@@ -2,11 +2,13 @@ package com.burnoutstopper.burnouttest.controller
 
 import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
+import com.burnoutstopper.burnouttest.model.SaveResponse
 import com.burnoutstopper.burnouttest.service.AnswerService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 
+@CrossOrigin(origins = ["http://localhost:8080", "https://be95-83-242-179-144.eu.ngrok.io"])
 @RestController
 @RequestMapping("/answer")
 class AnswerController @Autowired constructor(private val service: AnswerService) {
@@ -16,7 +18,7 @@ class AnswerController @Autowired constructor(private val service: AnswerService
     fun saveAnswer(
         @RequestHeader(name = "Authorization", required = false, defaultValue = "") token: String,
         @RequestBody answer: Answer
-    ): Pair<Result, String> {
+    ): SaveResponse {
         return service.saveAnswer(token, answer)
     }
 
