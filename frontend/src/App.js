@@ -1,11 +1,9 @@
 import "./App.css"
 import React, { useState } from "react"
 import "bootstrap/dist/css/bootstrap.min.css"
-import axios from "axios"
-
+import Header from "./components/Header/Header"
 import Test from "./components/Test/Test"
-import { Container, Row, Col, Button } from "react-bootstrap"
-import { quizData, siteData } from "./data"
+import { quizData } from "./data"
 
 function App() {
     const [testVisible, setTestVisible] = useState(false)
@@ -52,7 +50,10 @@ function App() {
 
     return (
         <div className="app">
-            <Test quizData={quizData} />
+            <Header />
+            <div className="content">
+                <Test quizData={quizData} />
+            </div>
         </div>
     )
 }

@@ -1,0 +1,30 @@
+header {
+    display: flex;
+    justify-content: space-around;
+}
+
+.menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 99%;
+    margin-top: 10px;
+}
+
+.default {
+    background-color: rgb(135, 247, 135);
+}
+
+.test {
+    background-color: rgb(245, 242, 56);
+}
+
+.leftpart {
+    display: flex;
+    align-items: center;
+}
+
+.rightpart {
+    display: flex;
+    align-items: center;
+}
