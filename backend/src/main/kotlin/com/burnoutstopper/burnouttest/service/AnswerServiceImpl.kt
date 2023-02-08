@@ -1,9 +1,6 @@
 package com.burnoutstopper.burnouttest.service
 
-import com.burnoutstopper.burnouttest.model.Answer
-import com.burnoutstopper.burnouttest.model.Respondent
-import com.burnoutstopper.burnouttest.model.Result
-import com.burnoutstopper.burnouttest.model.TempRespondent
+import com.burnoutstopper.burnouttest.model.*
 import com.burnoutstopper.burnouttest.repository.AnswerRepository
 import com.burnoutstopper.burnouttest.repository.TempRespondentRepository
 import com.burnoutstopper.burnouttest.util.Utils
@@ -23,7 +20,7 @@ constructor(
     private val tempRepo: TempRespondentRepository
 ) : AnswerService {
 
-    override fun saveAnswer(token: String, answer: Answer): Pair<Result, String> {
+    override fun saveAnswer(token: String, answer: Answer): SaveResponse {
 
         val respondent = if (token.isBlank()) {
             tempRepo.save(TempRespondent(token = UUID.randomUUID().toString()))
@@ -37,7 +34,7 @@ constructor(
         repository.save(answer)
         val result = service.calculateResult(answer)
 
-        return result to respondent.token
+        return SaveResponse(result, respondent.token)
     }
 
     override fun getAllAnswers(): List<Answer> = repository.findAll()
