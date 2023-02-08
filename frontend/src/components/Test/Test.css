@@ -1,6 +1,6 @@
 .quiz {
     width: 80%;
-    height: 200px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     margin-top: 50px;
@@ -15,4 +15,8 @@
     flex-direction: row;
     justify-content: space-between;
     width: 20%;
+}
+
+.question {
+    width: 90%;
 }
