@@ -22,8 +22,5 @@ body {
     background-color: lightblue;
 }
 
-.test {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.app {
 }
