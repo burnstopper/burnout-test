@@ -5,7 +5,7 @@ import "./Test.css"
 
 import LikertScale from "../LikertScale/LikertScale"
 
-const Test = ({ quizData }) => {
+const Test = ({ quizData, setResults }) => {
     const [backwardDisabled, setBackwardDisabled] = useState(true)
     const [forwardDisabled, setForwardDisabled] = useState(true)
 
