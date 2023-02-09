@@ -8,7 +8,7 @@ const LikertScale = ({ id, question, options, onChange, key }) => {
         responses: options,
         id: id,
         onChange: onChange,
-        key: key,
+        key: { key },
         layout: "stacked",
     }
     return (

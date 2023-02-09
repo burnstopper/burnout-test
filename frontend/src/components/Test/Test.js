@@ -14,6 +14,19 @@ const Test = ({ quizData }) => {
     const [item, setItem] = useState(quizData[index])
     const [chosen, setChosen] = useState(null)
 
+    const [answers, setAnswers] = useState(Array(22).fill("NONE"))
+
+    const mappingAnswers = {
+        NONE: "NONE",
+        Никогда: "NEVER",
+        "Очень редко": "VERY RARE",
+        Редко: "RARE",
+        Иногда: "SOMETIMES",
+        Часто: "OFTEN",
+        "Очень часто": "VERY OFTEN",
+        Ежедневно: "EVERYDAY",
+    }
+
     const log = (methodName) => {
         console.log(`${methodName}`)
         console.log(`chosen.text: ${chosen?.text}`)
@@ -21,19 +34,27 @@ const Test = ({ quizData }) => {
     }
 
     const onChange = (chosen) => {
+        console.log("called")
         setChosen(chosen)
-        if (index < quizData.length - 1) {
+        // if (index < quizData.length - 1) {
+        //     setForwardDisabled(false)
+        // }
+        if (chosen === null) {
+            setForwardDisabled(true)
+        } else {
             setForwardDisabled(false)
         }
     }
 
-    ///  not finished yet
     const onBackwardHandler = () => {
         const newIndex = index - 1
-        if (newIndex > 0) {
+        if (newIndex < quizData.length - 2) {
             setIndex(newIndex)
             setItem(quizData[newIndex])
-            // setChosen(null)  choose last option
+        } else {
+            setIndex(newIndex)
+            setItem(quizData[newIndex])
+            setForwardText("Вперед")
         }
 
         if (newIndex == 0) {
@@ -46,24 +67,29 @@ const Test = ({ quizData }) => {
         if (newIndex < quizData.length - 1) {
             setIndex(newIndex)
             setItem(quizData[newIndex])
-            /// reset()
-            /// setForwardDisabled(true)
+            reset()
+            answers[index] = chosen.text
         } else {
             setIndex(newIndex)
             setItem(quizData[newIndex])
-            /// reset()
+            reset()
+            answers[index] = chosen.text
             setForwardText("Отправить")
         }
 
-        if (index > 0) {
+        if (newIndex >= 1) {
             setBackwardDisabled(false)
         }
+        setChosen(null)
+        console.log(answers)
     }
 
     const [render, forceRender] = useState(0)
 
     const reset = () => {
         forceRender(Date.now())
+        setChosen(null)
+        setForwardDisabled(true)
     }
 
     return (
