@@ -17,8 +17,6 @@ const Test = ({ quizData, setResults }) => {
 
     const [answers, setAnswers] = useState(Array(22).fill("NONE"))
 
-    const [responseData, setResponseData] = useState({})
-
     const mappingAnswers = {
         NONE: "NONE",
         Никогда: "NEVER",
@@ -28,12 +26,6 @@ const Test = ({ quizData, setResults }) => {
         Часто: "OFTEN",
         "Очень часто": "VERY_OFTEN",
         Ежедневно: "DAILY",
-    }
-
-    const log = (methodName) => {
-        console.log(`${methodName}`)
-        console.log(`chosen.text: ${chosen?.text}`)
-        console.log(`index: ${index}`)
     }
 
     const onChange = (chosen) => {
@@ -84,7 +76,7 @@ const Test = ({ quizData, setResults }) => {
                 }
             )
             console.log(response.data)
-            setResponseData(response.data)
+            setResults(response.data)
         } catch (error) {
             console.error(error)
         }
@@ -111,7 +103,7 @@ const Test = ({ quizData, setResults }) => {
         if (newIndex < quizData.length - 1) {
             setIndex(newIndex)
             setItem(quizData[newIndex])
-            // reset()
+            reset()
             answers[index] = chosen.text
         } else if (newIndex >= quizData.length) {
             answers[index] = chosen.text
@@ -119,7 +111,7 @@ const Test = ({ quizData, setResults }) => {
         } else {
             setIndex(newIndex)
             setItem(quizData[newIndex])
-            // reset()
+            reset()
             answers[index] = chosen.text
             setForwardText("Отправить")
         }
@@ -127,8 +119,7 @@ const Test = ({ quizData, setResults }) => {
         if (newIndex >= 1) {
             setBackwardDisabled(false)
         }
-        // setChosen(null)
-        // console.log(answers)
+        setChosen(null)
     }
 
     const [render, forceRender] = useState(0)
