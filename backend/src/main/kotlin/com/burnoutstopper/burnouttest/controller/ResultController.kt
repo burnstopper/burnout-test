@@ -5,7 +5,7 @@ import com.burnoutstopper.burnouttest.service.ResultService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(origins = ["http://localhost:8080", "https://be95-83-242-179-144.eu.ngrok.io"])
+@CrossOrigin
 @RestController
 @RequestMapping("/result")
 class ResultController @Autowired constructor(private val service: ResultService) {

@@ -7,7 +7,7 @@ CREATE TYPE answer_type AS ENUM (
     'VERY_OFTEN',
     'DAILY');
 
-CREATE CAST (varchar AS answer_type) WITH INOUT AS IMPLICIT;
+CREATE CAST (VARCHAR AS answer_type) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE answers
 (

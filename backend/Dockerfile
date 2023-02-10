@@ -20,8 +20,20 @@ ENV PATH="${JAVA_HOME}/bin:${PATH}"
 # copy JRE from the base image
 COPY --from=builder /custom-jre $JAVA_HOME
 
+# Add app user
+ARG APPLICATION_USER=appuser
+RUN adduser --no-create-home -u 1000 -D $APPLICATION_USER
+
+# Configure working directory
+RUN mkdir /app && \
+    chown -R $APPLICATION_USER /app
+
+USER 1000
+
 # copy jar-file from the base image
-COPY --from=builder /project/build/libs/burnout-test-0.0.1.jar .
+COPY --from=builder --chown=1000:1000 /project/build/libs/burnout-test-0.0.1.jar /app/app.jar
+
+WORKDIR /app
 
 EXPOSE 8080
-CMD ["java", "-jar", "burnout-test-0.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
