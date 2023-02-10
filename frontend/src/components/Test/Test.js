@@ -17,17 +17,17 @@ const Test = ({ quizData, setResults }) => {
 
     const [answers, setAnswers] = useState(Array(22).fill("NONE"))
 
-    const [response, setResponse] = useState({})
+    const [responseData, setResponseData] = useState({})
 
     const mappingAnswers = {
         NONE: "NONE",
         Никогда: "NEVER",
-        "Очень редко": "VERY RARE",
-        Редко: "RARE",
+        "Очень редко": "VERY_RARELY",
+        Редко: "RARELY",
         Иногда: "SOMETIMES",
         Часто: "OFTEN",
-        "Очень часто": "VERY OFTEN",
-        Ежедневно: "EVERYDAY",
+        "Очень часто": "VERY_OFTEN",
+        Ежедневно: "DAILY",
     }
 
     const log = (methodName) => {
@@ -39,9 +39,6 @@ const Test = ({ quizData, setResults }) => {
     const onChange = (chosen) => {
         console.log("called")
         setChosen(chosen)
-        // if (index < quizData.length - 1) {
-        //     setForwardDisabled(false)
-        // }
         if (chosen === null) {
             setForwardDisabled(true)
         } else {
@@ -75,19 +72,19 @@ const Test = ({ quizData, setResults }) => {
             answer21: mappingAnswers[answers[20]],
             answer22: mappingAnswers[answers[21]],
         }
-        console.log(data)
 
-        // axios
-        //     .post("https://some-api.com/data", data)
-        //     .then((response) => {
-        //         setResponse(response.data)
-        //     })
-        //     .catch((error) => {
-        //         console.error(error)
-        //     })
         try {
-            const response = await axios.post("https://some-api.com/data", data)
-            setResponse(response.data)
+            const response = await axios.post(
+                "http://burnout.westeurope.cloudapp.azure.com:8080/answer/save-answer",
+                data,
+                {
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                }
+            )
+            console.log(response.data)
+            setResponseData(response.data)
         } catch (error) {
             console.error(error)
         }
