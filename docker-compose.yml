@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    container_name: backend
+    image: ghcr.io/burnstopper/burnout-backend
+#    build:
+#      context: ./backend
+    networks:
+      - local-net
+    env_file:
+      - .env
+    environment:
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+  frontend:
+    container_name: frontend
+    image: ghcr.io/burnstopper/burnout-frontend
+#    build:
+#      context: ./frontend
+    networks:
+      - local-net
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+networks:
+  local-net:
+    driver: bridge
