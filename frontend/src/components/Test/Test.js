@@ -67,7 +67,7 @@ const Test = ({ quizData, setResults }) => {
 
         try {
             const response = await axios.post(
-                "http://burnout.westeurope.cloudapp.azure.com:8080/answer/save-answer",
+                "http://burnout.westeurope.cloudapp.azure.com/answer/save-answer",
                 data,
                 {
                     headers: {

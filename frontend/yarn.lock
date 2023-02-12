@@ -2975,19 +2975,6 @@ builtin-modules@^3.1.0:
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-3.3.0.tgz#cae62812b89801e9656336e46223e030386be7b6"
   integrity sha512-zhaCDicdLuWN5UbN5IMnFqNMhNfo919sH85y2/ea+5Yg9TsTkeZxpL+JLbp6cgYFS4sRLp3YV4S6yDuqVWHYOw==
 
-burnstopper-menu-lib-2@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/burnstopper-menu-lib-2/-/burnstopper-menu-lib-2-0.1.0.tgz#7f88e7ba99bdf5c60e374a16be2ae615f36a2a5f"
-  integrity sha512-xwAnKY/xl3hDqCY9bYqtV1qxIcZuEcKF8W2S7ksoH+GbWntMx42vvlThZTMPj53/sFUEk1zaCw9KyEGA/UQ9bg==
-  dependencies:
-    "@testing-library/jest-dom" "^5.14.1"
-    "@testing-library/react" "^13.0.0"
-    "@testing-library/user-event" "^13.2.1"
-    react "^18.2.0"
-    react-dom "^18.2.0"
-    react-scripts "5.0.1"
-    web-vitals "^2.1.0"
-
 bytes@3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/bytes/-/bytes-3.0.0.tgz#d32815404d689699f85a4ea4fa8755dd13a96048"
