@@ -2,7 +2,7 @@ import React, { useState } from "react"
 
 import Likert from "react-likert-scale"
 
-const LikertScale = ({ id, question, options, onChange, key }) => {
+const LikertScale = ({ id, question, options, onChange, key, ref }) => {
     const likertOptions = {
         question: question,
         responses: options,
@@ -13,7 +13,7 @@ const LikertScale = ({ id, question, options, onChange, key }) => {
     }
     return (
         <div>
-            <Likert {...likertOptions} />
+            <Likert {...likertOptions} ref={ref} />
         </div>
     )
 }

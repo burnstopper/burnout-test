@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { Button } from "react-bootstrap"
 import "./Test.css"
@@ -17,6 +17,8 @@ const Test = ({ quizData, setResults }) => {
 
     const [answers, setAnswers] = useState(Array(22).fill("NONE"))
 
+    const refLikert = useRef(null)
+
     const mappingAnswers = {
         NONE: "NONE",
         Никогда: "NEVER",
@@ -28,8 +30,14 @@ const Test = ({ quizData, setResults }) => {
         Ежедневно: "DAILY",
     }
 
+    // useEffect(() => {
+    //     const secondRadio = refLikert.current.querySelectorAll(
+    //         'input[type="radio"]'
+    //     )[1]
+    //     secondRadio.checked = true
+    // }, [index])
+
     const onChange = (chosen) => {
-        console.log("called")
         setChosen(chosen)
         if (chosen === null) {
             setForwardDisabled(true)
@@ -140,6 +148,7 @@ const Test = ({ quizData, setResults }) => {
                     options={item.options}
                     onChange={onChange}
                     key={render}
+                    ref={refLikert}
                 />
             </div>
 

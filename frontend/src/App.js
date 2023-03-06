@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import Header from "./components/Header/Header"
 import Test from "./components/Test/Test"
 import Results from "./components/Results/Results"
-import { quizData } from "./data"
+import { burnoutQuizData } from "./data"
 
 function App() {
     const [results, setResults] = useState(0)
@@ -13,7 +13,7 @@ function App() {
         <div className="app">
             <Header />
             <div className="content">
-                <Test quizData={quizData} setResults={setResults} />
+                <Test quizData={burnoutQuizData} setResults={setResults} />
                 <Results results={results} />
             </div>
         </div>
