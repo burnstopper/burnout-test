@@ -36,4 +36,4 @@ COPY --from=builder --chown=1000:1000 /project/build/libs/burnout-test-0.0.1.jar
 WORKDIR /app
 
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "app.jar"]
