@@ -1,6 +1,7 @@
 header {
     display: flex;
     justify-content: space-around;
+    background-color: #f8f5e6;
 }
 
 .menu {
