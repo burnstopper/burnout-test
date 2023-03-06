@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
-import { Button } from "react-bootstrap"
+import { Button, Spinner } from "react-bootstrap"
 import "./Test.css"
 
 import LikertScale from "../LikertScale/LikertScale"
@@ -16,6 +16,8 @@ const Test = ({ quizData, setResults }) => {
     const [chosen, setChosen] = useState(null)
 
     const [answers, setAnswers] = useState(Array(22).fill("NONE"))
+
+    const [state, setState] = useState("testing") // testing, waiting, finished
 
     const refLikert = useRef(null)
 
@@ -47,6 +49,7 @@ const Test = ({ quizData, setResults }) => {
     }
 
     const handleSubmit = async (event) => {
+        setState("waiting")
         console.log(answers)
         const data = {
             answer1: mappingAnswers[answers[0]],
@@ -85,6 +88,7 @@ const Test = ({ quizData, setResults }) => {
             )
             console.log(response.data)
             setResults(response.data)
+            setState("finished")
         } catch (error) {
             console.error(error)
         }
@@ -138,30 +142,88 @@ const Test = ({ quizData, setResults }) => {
         setForwardDisabled(true)
     }
 
-    return (
-        <div className="quiz">
-            <div className="question">
-                <label>{item.id + 1}/22</label>
-                <LikertScale
-                    id={item.id}
-                    question={item.question}
-                    options={item.options}
-                    onChange={onChange}
-                    key={render}
-                    ref={refLikert}
-                />
-            </div>
+    const returnToStart = () => {
+        window.location.reload()
+    }
 
-            <div className="controls">
-                <Button disabled={backwardDisabled} onClick={onBackwardHandler}>
-                    Назад
+    let componentToRender
+    if (state === "testing") {
+        componentToRender = (
+            <>
+                <div className="question">
+                    <label>{item.id + 1}/22</label>
+                    <LikertScale
+                        id={item.id}
+                        question={item.question}
+                        options={item.options}
+                        onChange={onChange}
+                        key={render}
+                        ref={refLikert}
+                    />
+                </div>
+
+                <div className="controls">
+                    <Button
+                        disabled={backwardDisabled}
+                        onClick={onBackwardHandler}
+                    >
+                        Назад
+                    </Button>
+                    <Button
+                        disabled={forwardDisabled}
+                        onClick={onForwardHandler}
+                    >
+                        {forwardText}
+                    </Button>
+                </div>
+            </>
+        )
+    } else if (state === "waiting") {
+        componentToRender = (
+            <>
+                <div className="textquiz">
+                    <p>
+                        Важно отметить, что тест на профессиональное выгорание
+                        не является диагностическим инструментом и не может
+                        заменить консультацию специалиста в области психологии
+                        или медицины. Однако, он может помочь обратить внимание
+                        на проблему и стать отправной точкой для дальнейших мер
+                        по улучшению психологического состояния и качества
+                        жизни.
+                    </p>
+                </div>
+                <Button variant="primary" disabled className="spinbutton">
+                    <Spinner
+                        as="span"
+                        animation="border"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                    />
+                    <>Подсчет результатов</>
                 </Button>
-                <Button disabled={forwardDisabled} onClick={onForwardHandler}>
-                    {forwardText}
-                </Button>
-            </div>
-        </div>
-    )
+            </>
+        )
+    } else if (state === "finished") {
+        componentToRender = (
+            <>
+                <div className="textquiz">
+                    <p>
+                        Важно отметить, что тест на профессиональное выгорание
+                        не является диагностическим инструментом и не может
+                        заменить консультацию специалиста в области психологии
+                        или медицины. Однако, он может помочь обратить внимание
+                        на проблему и стать отправной точкой для дальнейших мер
+                        по улучшению психологического состояния и качества
+                        жизни.
+                    </p>
+                </div>
+                <Button onClick={returnToStart}>Вернуться к началу</Button>
+            </>
+        )
+    }
+
+    return <div className="quiz">{componentToRender}</div>
 }
 
 export default Test

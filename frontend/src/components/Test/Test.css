@@ -20,3 +20,11 @@
 .question {
     width: 90%;
 }
+
+.spinbutton {
+    display: flex;
+}
+
+.spinbutton > * {
+    margin-right: 10px;
+}
