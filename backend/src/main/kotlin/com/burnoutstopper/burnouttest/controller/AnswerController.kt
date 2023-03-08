@@ -1,30 +1,41 @@
 package com.burnoutstopper.burnouttest.controller
 
-import com.burnoutstopper.burnouttest.model.Answer
+import Answer
+import com.burnoutstopper.burnouttest.dto.ResultUserDto
 import com.burnoutstopper.burnouttest.model.Result
-import com.burnoutstopper.burnouttest.model.SaveResponse
 import com.burnoutstopper.burnouttest.service.AnswerService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 
 @CrossOrigin
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/api/v1/answers")
 class AnswerController @Autowired constructor(private val service: AnswerService) {
 
-    //TODO Authorization Header can be empty or null
-    @PostMapping("/save-answer")
+    @PostMapping
     fun saveAnswer(
-        @RequestHeader(name = "Authorization", required = false, defaultValue = "") token: String,
+        @CookieValue("token", required = false) token: String,
         @RequestBody answer: Answer
-    ): SaveResponse {
-        return service.saveAnswer(token, answer)
+    ): ResponseEntity<ResultUserDto> {
+        val (result, currenToken) = service.saveAnswer(token, answer)
+        val dto = convertToDto(result)
+        val headers = HttpHeaders()
+        headers.add("token", currenToken)
+        return ResponseEntity(dto, HttpStatus.OK)
     }
 
-    @GetMapping("/respondent")
-    fun getRespondentAnswer(@RequestHeader("Authorization") token: String): Answer = service.getRespondentAnswer(token)
+    //TODO get last (100) answers
 
-    @GetMapping("/all")
-    fun getAllAnswers(): List<Answer> = service.getAllAnswers()
+    private fun convertToDto(result: Result): ResultUserDto {
+        return ResultUserDto(
+            exhaustion = result.exhaustion,
+            depersonalization = result.depersonalization,
+            reduction = result.reduction,
+            integralIndex = result.integralIndex
+        )
+    }
 }

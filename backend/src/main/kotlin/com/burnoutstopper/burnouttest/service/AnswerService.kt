@@ -1,14 +1,11 @@
 package com.burnoutstopper.burnouttest.service
 
-import com.burnoutstopper.burnouttest.model.Answer
+import Answer
 import com.burnoutstopper.burnouttest.model.Result
-import com.burnoutstopper.burnouttest.model.SaveResponse
 
 interface AnswerService {
 
-    fun saveAnswer(token: String, answer: Answer): SaveResponse
+    fun saveAnswer(token: String, answer: Answer): Pair<Result, String>
 
-    fun getRespondentAnswer(token: String): Answer
-
-    fun getAllAnswers(): List<Answer>
+    fun getAnswer(token: String): Answer
 }

@@ -1,18 +1,20 @@
 CREATE TYPE answer_type AS ENUM (
-    'NEVER',
-    'VERY_RARELY',
-    'RARELY',
-    'SOMETIMES',
-    'OFTEN',
-    'VERY_OFTEN',
-    'DAILY');
+    'never',
+    'very_rarely',
+    'rarely',
+    'sometimes',
+    'often',
+    'very_often',
+    'daily');
 
 CREATE CAST (VARCHAR AS answer_type) WITH INOUT AS IMPLICIT;
 
 CREATE TABLE answers
 (
-    id            BIGSERIAL PRIMARY KEY, --TODO: check to BIGINT when switching to SQLite
+    id            BIGSERIAL PRIMARY KEY,
     respondent_id INTEGER     NOT NULL,
+    date_time     TIMESTAMP WITH TIME ZONE,
+    quiz_id       INTEGER,
     answer1       answer_type NOT NULL,
     answer2       answer_type NOT NULL,
     answer3       answer_type NOT NULL,
@@ -35,4 +37,16 @@ CREATE TABLE answers
     answer20      answer_type NOT NULL,
     answer21      answer_type NOT NULL,
     answer22      answer_type NOT NULL
+);
+
+CREATE TABLE results
+(
+    id                BIGSERIAL PRIMARY KEY,
+    respondent_id     INTEGER NOT NULL,
+    date_time         TIMESTAMP WITH TIME ZONE,
+    quiz_id           INTEGER,
+    exhaustion        INTEGER,
+    depersonalization INTEGER,
+    reduction         INTEGER,
+    integral_index    DECIMAL(1, 2)
 );
