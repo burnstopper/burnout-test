@@ -1,7 +1,8 @@
 package com.burnoutstopper.burnouttest.controller
 
 import com.burnoutstopper.burnouttest.dto.ResultRecentDto
-import com.burnoutstopper.burnouttest.dto.ResultDto
+import com.burnoutstopper.burnouttest.dto.ResultResearcherDto
+import com.burnoutstopper.burnouttest.dto.ResultUserDto
 import com.burnoutstopper.burnouttest.model.Result
 import com.burnoutstopper.burnouttest.service.ResultService
 import org.springframework.beans.factory.annotation.Autowired
@@ -13,7 +14,14 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/results")
 class ResultController @Autowired constructor(private val service: ResultService) {
+
     @GetMapping
+    fun getResultsByCookie(@CookieValue("token", required = true) token: String) : ResponseEntity<List<ResultUserDto>> {
+        val results = service.getResults(token).parallelStream().map { convertToDto(it) }.toList()
+        return ResponseEntity(results, HttpStatus.OK)
+    }
+
+    @GetMapping("/recent")
     fun getRecentResults(
         @RequestHeader("Authorization", required = false) authorizationHeader: String, //TODO change to required = true
         @RequestParam("from") fromTimestamp: Long
@@ -23,7 +31,7 @@ class ResultController @Autowired constructor(private val service: ResultService
     }
 
     @GetMapping("/{id}")
-    fun getResultById(@PathVariable("id") id: Int): ResponseEntity<ResultDto> {
+    fun getResultById(@PathVariable("id") id: Int): ResponseEntity<ResultResearcherDto> {
         val result = service.getResult(id)
         if (result == null) {
             return ResponseEntity(null, HttpStatus.NOT_FOUND)
@@ -32,16 +40,20 @@ class ResultController @Autowired constructor(private val service: ResultService
         return ResponseEntity(dto, HttpStatus.OK)
     }
 
-    @GetMapping
-    fun getResultsByCookie(@CookieValue("token", required = true) token: String) : ResponseEntity<List<ResultDto>> {
-        val results = service.getResults(token).parallelStream().map { convertToResultDto(it) }.toList()
-        return ResponseEntity(results, HttpStatus.OK)
+    private fun convertToDto(result: Result): ResultUserDto {
+        return ResultUserDto(
+            dateTime = result.dateTime,
+            exhaustion = result.exhaustion,
+            depersonalization = result.depersonalization,
+            reduction = result.reduction,
+            integralIndex = result.integralIndex
+        )
     }
 
-    private fun convertToResultDto(result: Result): ResultDto {
-        return ResultDto(
+    private fun convertToResultDto(result: Result): ResultResearcherDto {
+        return ResultResearcherDto(
             respondentId = result.respondentId,
-            dataTime = result.dateTime.toEpochSecond(),
+            dateTime = result.dateTime.toEpochSecond(),
             emotionalExhaustion = result.exhaustion,
             depersonalization = result.depersonalization,
             reductionOfProfessionalism = result.reduction,

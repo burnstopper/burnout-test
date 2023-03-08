@@ -1,18 +1,17 @@
 package com.burnoutstopper.burnouttest.dto
 
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.sql.Timestamp
 import java.util.*
 
 /**
  * Result for researcher
  */
-class ResultDto(
+class ResultResearcherDto(
     @JsonProperty("respondent_id")
     val respondentId: Int,
 
-    @JsonProperty("datatime")
-    val dataTime: Long,
+    @JsonProperty("date_time")
+    val dateTime: Long,
 
     @JsonProperty("emotional_exhaustion")
     val emotionalExhaustion: Int,

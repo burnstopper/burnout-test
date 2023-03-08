@@ -1,6 +1,6 @@
 package com.burnoutstopper.burnouttest.service
 
-import Answer
+import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.*
 import com.burnoutstopper.burnouttest.repository.AnswerRepository
 import com.burnoutstopper.burnouttest.repository.TempRespondentRepository
@@ -18,17 +18,19 @@ constructor(
 ) : AnswerService {
 
     override fun saveAnswer(token: String, answer: Answer): Pair<Result, String> {
-        val respondent = if (token == ValueConstants.DEFAULT_NONE) {
-            tempRepo.save(TempRespondent(token = UUID.randomUUID().toString()))
+        var currentToken = token
+        val respondent = if (token.isBlank()) {
+            currentToken = UUID.randomUUID().toString()
+            tempRepo.save(TempRespondent(token = currentToken))
 //            Utils.createRespondent() TODO uncomment after integration with respondent microservice
         } else {
 //            val id = Utils.getRespondentId(token) TODO uncomment after integration with respondent microservice
-            val id = tempRepo.findByToken(token).id
-            TempRespondent(id, token)
+            val id = tempRepo.findByToken(currentToken).id
+            TempRespondent(id, currentToken)
         }
         answer.respondentId = respondent.id!!
         answerRepository.save(answer)
-        return resultService.saveResult(answer) to token
+        return resultService.saveResult(answer) to currentToken
     }
 
     override fun getAnswer(token: String): Answer {

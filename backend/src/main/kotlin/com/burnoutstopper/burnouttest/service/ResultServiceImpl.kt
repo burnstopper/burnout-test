@@ -1,6 +1,6 @@
 package com.burnoutstopper.burnouttest.service
 
-import Answer
+import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.AnswerType
 import com.burnoutstopper.burnouttest.model.Result
 import com.burnoutstopper.burnouttest.repository.ResultRepository
@@ -32,13 +32,13 @@ constructor(
     }
 
     override fun getResult(id: Int): Result? {
-        return resultRepository.findById(id).getOrNull()
+        return resultRepository.findById(id.toLong()).getOrNull()
     }
 
     override fun getResults(token: String): List<Result> {
         // val id = Utils.getRespondentId(token) TODO uncomment after integration with respondent microservice
         val id = tempRepo.findByToken(token).id!!
-        return resultRepository.findAllById(listOf(id))
+        return resultRepository.findAllByRespondentId(id)
     }
 
     private fun calculateResult(answer: Answer): Result {
@@ -48,7 +48,7 @@ constructor(
         val index = integralBurnoutIndex(exhaustionSum, depersonalizationSum, reductionSum)
         return Result(
             respondentId = answer.respondentId,
-            dateTime = answer.dataTime,
+            dateTime = answer.dateTime,
             quizId = answer.quizId,
             exhaustion = exhaustionSum,
             depersonalization = depersonalizationSum,

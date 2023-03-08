@@ -1,4 +1,5 @@
-import com.burnoutstopper.burnouttest.model.AnswerType
+package com.burnoutstopper.burnouttest.model
+
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import jakarta.persistence.*
@@ -15,8 +16,8 @@ data class Answer(
     @JsonIgnore
     var respondentId: Int,
 
-    @JsonProperty("data_time")
-    val dataTime: OffsetDateTime,
+    @JsonProperty("date_time")
+    val dateTime: OffsetDateTime,
 
     @JsonProperty("quiz_id")
     val quizId: Int?,

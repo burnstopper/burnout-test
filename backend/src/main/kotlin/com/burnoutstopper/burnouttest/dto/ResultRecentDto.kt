@@ -9,7 +9,7 @@ data class ResultRecentDto(
     @JsonProperty("respondent_id")
     val respondentId: Int,
 
-    @JsonProperty("datatime")
+    @JsonProperty("date_time")
     val dateTime: Long,
 
     @JsonProperty("quiz_id")
