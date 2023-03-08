@@ -2,10 +2,11 @@ import React, { useState, useEffect, useRef } from "react"
 import axios from "axios"
 import { Button, Spinner } from "react-bootstrap"
 import "./Test.css"
+import CookieLib from "../../utils/cookies"
 
 import LikertScale from "../LikertScale/LikertScale"
 
-const Test = ({ quizData, setResults }) => {
+const Test = ({ quizData, setResults, setToken }) => {
     const [backwardDisabled, setBackwardDisabled] = useState(true)
     const [forwardDisabled, setForwardDisabled] = useState(true)
 
@@ -77,17 +78,21 @@ const Test = ({ quizData, setResults }) => {
         }
 
         try {
+            const token = CookieLib.getCookieToken()
             const response = await axios.post(
                 "http://burnout.westeurope.cloudapp.azure.com/answer/save-answer",
                 data,
                 {
                     headers: {
                         "Content-Type": "application/json",
+                        token: token,
                     },
                 }
             )
             console.log(response.data)
             setResults(response.data)
+            CookieLib.setCookieToken(response.data.token)
+            setToken(response.data.token)
             setState("finished")
         } catch (error) {
             console.error(error)
@@ -164,12 +169,14 @@ const Test = ({ quizData, setResults }) => {
 
                 <div className="controls">
                     <Button
+                        variant="success"
                         disabled={backwardDisabled}
                         onClick={onBackwardHandler}
                     >
                         Назад
                     </Button>
                     <Button
+                        variant="success"
                         disabled={forwardDisabled}
                         onClick={onForwardHandler}
                     >
@@ -192,7 +199,7 @@ const Test = ({ quizData, setResults }) => {
                         жизни.
                     </p>
                 </div>
-                <Button variant="primary" disabled className="spinbutton">
+                <Button variant="success" disabled className="spinbutton">
                     <Spinner
                         as="span"
                         animation="border"
@@ -218,7 +225,9 @@ const Test = ({ quizData, setResults }) => {
                         жизни.
                     </p>
                 </div>
-                <Button onClick={returnToStart}>Вернуться к началу</Button>
+                <Button variant="success" onClick={returnToStart}>
+                    Вернуться к началу
+                </Button>
             </>
         )
     }

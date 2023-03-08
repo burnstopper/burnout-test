@@ -11,7 +11,9 @@ const Results = ({ results }) => {
 
     return (
         <div className="results">
-            <label>Результаты</label>
+            <label>
+                <h5>Результаты</h5>
+            </label>
             <Table striped>
                 <thead>
                     <tr>

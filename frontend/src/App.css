@@ -35,3 +35,10 @@ body {
     justify-content: space-around;
     background-color: #f8f5e6;
 }
+
+.historybtn {
+    width: 80%;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row-reverse;
+}

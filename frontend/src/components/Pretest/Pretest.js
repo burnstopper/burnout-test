@@ -19,7 +19,9 @@ const Pretest = ({ handleClick }) => {
                     чувства.
                 </p>
             </div>
-            <Button onClick={handleClick}>Начать тест</Button>
+            <Button variant="success" onClick={handleClick}>
+                Начать тест
+            </Button>
         </div>
     )
 }
