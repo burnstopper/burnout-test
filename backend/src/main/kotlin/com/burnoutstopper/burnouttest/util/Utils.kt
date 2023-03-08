@@ -1,15 +1,7 @@
 package com.burnoutstopper.burnouttest.util
 
-import com.burnoutstopper.burnouttest.model.Answer
-import com.burnoutstopper.burnouttest.model.AnswerType
 import com.burnoutstopper.burnouttest.model.Respondent
 import org.springframework.web.client.RestTemplate
-import com.burnoutstopper.burnouttest.model.Result
-import com.burnoutstopper.burnouttest.repository.TempRespondentRepository
-import org.apache.catalina.core.ApplicationContext
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-import kotlin.math.sqrt
 
 object Utils {
 
