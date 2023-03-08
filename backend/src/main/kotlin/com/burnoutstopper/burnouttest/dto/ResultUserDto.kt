@@ -2,11 +2,14 @@ package com.burnoutstopper.burnouttest.dto
 
 import com.burnoutstopper.burnouttest.model.Level
 import com.fasterxml.jackson.annotation.JsonProperty
+import java.time.OffsetDateTime
 
 /**
  * Result for user
  */
 class ResultUserDto(
+    @JsonProperty("date_time")
+    val dateTime: OffsetDateTime,
     @JsonProperty("exhaustion")
     val exhaustion: Int,
     @JsonProperty("depersonalization")

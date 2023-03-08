@@ -1,6 +1,6 @@
 package com.burnoutstopper.burnouttest.service
 
-import Answer
+import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
 
 interface AnswerService {

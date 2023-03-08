@@ -9,7 +9,7 @@ import org.hibernate.annotations.GenericGenerator
 data class TempRespondent(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null,
+    var id: Int? = null,
 
     val token: String
 )
