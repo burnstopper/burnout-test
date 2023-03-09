@@ -12,25 +12,20 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin
+@CrossOrigin(originPatterns = ["*"], allowCredentials = "true")
 @RestController
 @RequestMapping("/api/v1/answers")
 class AnswerController @Autowired constructor(private val service: AnswerService) {
 
     @PostMapping
     fun saveAnswer(
-        @CookieValue("token", required = false, defaultValue = "") token: String,
+        @RequestHeader("token", required = false, defaultValue = "") token: String,
         @RequestBody answer: Answer,
         response: HttpServletResponse
     ): ResponseEntity<ResultUserDto> {
         val (result, currenToken) = service.saveAnswer(token, answer)
         val dto = convertToDto(result)
-        val cookie = Cookie("token", currenToken)
-        cookie.maxAge = 7 * 24 * 60 * 60 // expires in 7 days
-        cookie.secure = true
-        cookie.isHttpOnly = true
-        cookie.path = "/"
-        response.addCookie(cookie)
+        response.addHeader("token", currenToken)
         return ResponseEntity(dto, HttpStatus.OK)
     }
 

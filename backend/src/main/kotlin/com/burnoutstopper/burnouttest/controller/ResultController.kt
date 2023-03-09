@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 class ResultController @Autowired constructor(private val service: ResultService) {
 
     @GetMapping
-    fun getResultsByCookie(@CookieValue("token", required = true) token: String) : ResponseEntity<List<ResultUserDto>> {
+    fun getResultsByCookie(@RequestHeader("token", required = true) token: String) : ResponseEntity<List<ResultUserDto>> {
         val results = service.getResults(token).parallelStream().map { convertToDto(it) }.toList()
         return ResponseEntity(results, HttpStatus.OK)
     }
