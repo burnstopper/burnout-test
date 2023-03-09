@@ -1,18 +1,16 @@
 package com.burnoutstopper.burnouttest.controller
 
-import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.dto.ResultUserDto
+import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
 import com.burnoutstopper.burnouttest.service.AnswerService
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-@CrossOrigin(originPatterns = ["*"], allowCredentials = "true")
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/answers")
 class AnswerController @Autowired constructor(private val service: AnswerService) {
