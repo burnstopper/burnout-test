@@ -2,7 +2,7 @@ import React from "react"
 import "./Account.css"
 
 const transformString = (str) => {
-    if (str.length <= 8) {
+    if (str?.length <= 8) {
         return str
     } else {
         return str.substring(0, 4) + "..." + str.substring(str.length - 4)
@@ -12,7 +12,11 @@ const transformString = (str) => {
 const Account = ({ name }) => {
     return (
         <label className="username">
-            Пользователь: {transformString(name)}
+            {name ? (
+                <> Пользователь: {transformString(name)}</>
+            ) : (
+                <>Пользователь: </>
+            )}
         </label>
     )
 }

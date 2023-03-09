@@ -23,14 +23,14 @@ const Test = ({ quizData, setResults, setToken }) => {
     const refLikert = useRef(null)
 
     const mappingAnswers = {
-        NONE: "NONE",
-        Никогда: "NEVER",
-        "Очень редко": "VERY_RARELY",
-        Редко: "RARELY",
-        Иногда: "SOMETIMES",
-        Часто: "OFTEN",
-        "Очень часто": "VERY_OFTEN",
-        Ежедневно: "DAILY",
+        NONE: "none",
+        Никогда: "never",
+        "Очень редко": "very_rarely",
+        Редко: "rarely",
+        Иногда: "sometimes",
+        Часто: "often",
+        "Очень часто": "very_often",
+        Ежедневно: "daily",
     }
 
     // useEffect(() => {
@@ -52,7 +52,12 @@ const Test = ({ quizData, setResults, setToken }) => {
     const handleSubmit = async (event) => {
         setState("waiting")
         console.log(answers)
+        const date = new Date().toISOString()
+        console.log(date)
+        const token = CookieLib.getCookieToken()
         const data = {
+            token: token,
+            data_time: date,
             answer1: mappingAnswers[answers[0]],
             answer2: mappingAnswers[answers[1]],
             answer3: mappingAnswers[answers[2]],
@@ -76,16 +81,14 @@ const Test = ({ quizData, setResults, setToken }) => {
             answer21: mappingAnswers[answers[20]],
             answer22: mappingAnswers[answers[21]],
         }
-
+        console.log(data)
         try {
-            const token = CookieLib.getCookieToken()
             const response = await axios.post(
-                "http://burnout.westeurope.cloudapp.azure.com/answer/save-answer",
+                "http://burnout.westeurope.cloudapp.azure.com/api/v1/answers",
                 data,
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        token: token,
                     },
                 }
             )

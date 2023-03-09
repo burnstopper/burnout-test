@@ -29,31 +29,35 @@ const Results = ({ results }) => {
                         <td>Эмоциональное истощение </td>
                         <td>{results?.result?.exhaustion}</td>
                         <td>
-                            {mappingResults[results?.result?.exhaustionLevel]}
+                            {mappingResults[results?.result?.exhaustion_level]}
                         </td>
-                        <td>{results?.result?.exhaustionPercent}%</td>
+                        <td>{results?.result?.exhaustion_percent}%</td>
                     </tr>
                     <tr>
                         <td>Деперсонализация </td>
-                        <td>{results?.result?.deperson}</td>
+                        <td>{results?.result?.depersonalization}</td>
                         <td>
-                            {mappingResults[results?.result?.depersonLevel]}
+                            {
+                                mappingResults[
+                                    results?.result?.depersonalization_level
+                                ]
+                            }
                         </td>
-                        <td>{results?.result?.depersonPercent}%</td>
+                        <td>{results?.result?.depersonalization_percent}%</td>
                     </tr>
                     <tr>
                         <td>Редукция профессионализма</td>
                         <td>{results?.result?.reduction}</td>
                         <td>
-                            {mappingResults[results?.result?.reductionLevel]}
+                            {mappingResults[results?.result?.reduction_level]}
                         </td>
-                        <td>{results?.result?.reductionPercent}%</td>
+                        <td>{results?.result?.reduction_percent}%</td>
                     </tr>
                     <tr>
                         <td>Интегральный индекс выгорания</td>
-                        <td>{results?.result?.burnoutIndex}</td>
+                        <td>{results?.result?.integral_index}</td>
                         <td></td>
-                        <td>{results?.result?.burnoutIndexPercent}%</td>
+                        <td>{results?.result?.integral_index_percent}%</td>
                     </tr>
                 </tbody>
             </Table>

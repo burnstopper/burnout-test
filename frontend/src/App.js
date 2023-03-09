@@ -17,8 +17,14 @@ function App() {
 
     const [token, setToken] = useState(CookieLib.getCookieToken())
 
+    const [showHistory, setShowHistory] = useState(false)
+
     const handleClick = () => {
         setShowTest(true)
+    }
+
+    const handleHistoryClick = () => {
+        setShowHistory(!showHistory)
     }
 
     return (
@@ -37,9 +43,11 @@ function App() {
 
                 <Results results={results} />
                 <div className="historybtn">
-                    <Button variant="success">История</Button>
+                    <Button variant="success" onClick={handleHistoryClick}>
+                        История
+                    </Button>
                 </div>
-                <History />
+                {showHistory ? <History setResults={setResults} /> : <></>}
             </div>
         </div>
     )
