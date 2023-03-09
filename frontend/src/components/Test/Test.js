@@ -23,14 +23,14 @@ const Test = ({ quizData, setResults, setToken }) => {
     const refLikert = useRef(null)
 
     const mappingAnswers = {
-        NONE: "none",
-        Никогда: "never",
-        "Очень редко": "very_rarely",
-        Редко: "rarely",
-        Иногда: "sometimes",
-        Часто: "often",
-        "Очень часто": "very_often",
-        Ежедневно: "daily",
+        NONE: "NONE",
+        Никогда: "NEVER",
+        "Очень редко": "VERY_RARELY",
+        Редко: "RARELY",
+        Иногда: "SOMETIMES",
+        Часто: "OFTEN",
+        "Очень часто": "VERY_OFTEN",
+        Ежедневно: "DAILY ",
     }
 
     // useEffect(() => {
@@ -53,11 +53,9 @@ const Test = ({ quizData, setResults, setToken }) => {
         setState("waiting")
         console.log(answers)
         const date = new Date().toISOString()
-        console.log(date)
-        const token = CookieLib.getCookieToken()
         const data = {
-            token: token,
             data_time: date,
+            quiz_id: 0,
             answer1: mappingAnswers[answers[0]],
             answer2: mappingAnswers[answers[1]],
             answer3: mappingAnswers[answers[2]],
