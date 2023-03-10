@@ -53,8 +53,11 @@ const Test = ({ quizData, setResults, setToken }) => {
         setState("waiting")
         console.log(answers)
         const date = new Date().toISOString()
+        console.log(date)
+        const token = CookieLib.getCookieToken()
+        console.log(token)
         const data = {
-            data_time: date,
+            date_time: date,
             quiz_id: 0,
             answer1: mappingAnswers[answers[0]],
             answer2: mappingAnswers[answers[1]],
@@ -87,13 +90,14 @@ const Test = ({ quizData, setResults, setToken }) => {
                 {
                     headers: {
                         "Content-Type": "application/json",
+                        token: token,
                     },
                 }
             )
-            console.log(response.data)
+            console.log(response)
             setResults(response.data)
-            CookieLib.setCookieToken(response.data.token)
-            setToken(response.data.token)
+            // CookieLib.setCookieToken(response.data.token)
+            // setToken(response.data.token)
             setState("finished")
         } catch (error) {
             console.error(error)

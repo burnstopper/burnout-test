@@ -12,7 +12,7 @@ const transformString = (str) => {
 const Account = ({ name }) => {
     return (
         <label className="username">
-            {name ? (
+            {name && name !== "undefined" ? (
                 <> Пользователь: {transformString(name)}</>
             ) : (
                 <>Пользователь: </>

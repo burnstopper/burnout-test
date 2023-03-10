@@ -3,9 +3,10 @@ import { Dropdown } from "react-bootstrap"
 import "./Settings.css"
 import CookieLib from "../../utils/cookies"
 
-const Settings = ({ toggleMode }) => {
+const Settings = ({ toggleMode, setToken }) => {
     const resetCookie = () => {
         CookieLib.removeCookie()
+        setToken(undefined)
     }
 
     return (

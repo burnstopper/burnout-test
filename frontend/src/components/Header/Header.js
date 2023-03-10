@@ -5,7 +5,7 @@ import Logo from "../Logo/Logo"
 import Navigation from "../Navigation/Navigation"
 import Settings from "../Settings/Settings"
 
-const Header = ({ token }) => {
+const Header = ({ token, setToken }) => {
     const [mode, setMode] = useState("default")
 
     const toggleMode = () => {
@@ -29,7 +29,7 @@ const Header = ({ token }) => {
                 </div>
                 <div className="rightpart">
                     <Account name={token} />
-                    <Settings toggleMode={toggleMode} />
+                    <Settings toggleMode={toggleMode} setToken={setToken} />
                 </div>
             </div>
         </header>

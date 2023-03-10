@@ -9,6 +9,7 @@ import History from "./components/History/History"
 import { burnoutQuizData } from "./data"
 import { Button } from "react-bootstrap"
 import CookieLib from "./utils/cookies"
+import axios from "axios"
 
 function App() {
     const [results, setResults] = useState(0)
@@ -25,11 +26,35 @@ function App() {
 
     const handleHistoryClick = () => {
         setShowHistory(!showHistory)
+        if (!showHistory) {
+            loadHistory()
+        }
+    }
+
+    const loadHistory = async () => {
+        const token = CookieLib.getCookieToken()
+        if (token && token !== "undefined") {
+            try {
+                const response = await axios.get(
+                    "http://burnout.westeurope.cloudapp.azure.com/api/v1/results",
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            token: token,
+                        },
+                    }
+                )
+                console.log(response.data)
+                return response.data
+            } catch (error) {
+                console.error(error)
+            }
+        }
     }
 
     return (
         <div className="app">
-            <Header token={token} />
+            <Header token={token} setToken={setToken} />
             <div className="content">
                 {showTest ? (
                     <Test
@@ -47,7 +72,14 @@ function App() {
                         История
                     </Button>
                 </div>
-                {showHistory ? <History setResults={setResults} /> : <></>}
+                {showHistory ? (
+                    <History
+                        setResults={setResults}
+                        loadHistory={loadHistory}
+                    />
+                ) : (
+                    <></>
+                )}
             </div>
         </div>
     )
