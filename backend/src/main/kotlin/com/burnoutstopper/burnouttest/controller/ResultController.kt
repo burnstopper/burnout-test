@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*
 class ResultController @Autowired constructor(private val service: ResultService) {
 
     @GetMapping
-    fun getResultsByCookie(@RequestHeader("token", required = true) token: String) : ResponseEntity<List<ResultUserDto>> {
+    fun getResultsByToken(@RequestParam("token") token: String): ResponseEntity<List<ResultUserDto>> {
         val results = service.getResults(token).parallelStream().map { convertToDto(it) }.toList()
         return ResponseEntity(results, HttpStatus.OK)
     }
@@ -26,7 +26,8 @@ class ResultController @Autowired constructor(private val service: ResultService
         @RequestHeader("Authorization", required = false) authorizationHeader: String, //TODO change to required = true
         @RequestParam("from") fromTimestamp: Long
     ): ResponseEntity<List<ResultRecentDto>> {
-        val results = service.getRecentResults(fromTimestamp).parallelStream().map { convertToRecentResultDto(it) }.toList()
+        val results =
+            service.getRecentResults(fromTimestamp).parallelStream().map { convertToRecentResultDto(it) }.toList()
         return ResponseEntity(results, HttpStatus.OK)
     }
 

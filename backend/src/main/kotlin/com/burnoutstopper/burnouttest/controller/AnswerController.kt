@@ -1,5 +1,6 @@
 package com.burnoutstopper.burnouttest.controller
 
+import com.burnoutstopper.burnouttest.dto.AnswerRequest
 import com.burnoutstopper.burnouttest.dto.ResultUserDto
 import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @CrossOrigin
 @RestController
@@ -17,14 +19,12 @@ class AnswerController @Autowired constructor(private val service: AnswerService
 
     @PostMapping
     fun saveAnswer(
-        @RequestHeader("token", required = false, defaultValue = "") token: String,
-        @RequestBody answer: Answer,
-        response: HttpServletResponse
-    ): ResponseEntity<ResultUserDto> {
-        val (result, currenToken) = service.saveAnswer(token, answer)
+        @RequestBody answerRequest: AnswerRequest,
+    ): ResponseEntity<Map<String, Any>> {
+        val (result, currenToken) = service.saveAnswer(answerRequest.token, answerRequest.answer)
         val dto = convertToDto(result)
-        response.addHeader("token", currenToken)
-        return ResponseEntity(dto, HttpStatus.OK)
+        val response = mapOf("result" to dto, "token" to currenToken)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
     private fun convertToDto(result: Result): ResultUserDto {
