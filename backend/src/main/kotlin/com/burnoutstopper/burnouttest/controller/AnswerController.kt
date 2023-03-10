@@ -1,6 +1,7 @@
 package com.burnoutstopper.burnouttest.controller
 
 import com.burnoutstopper.burnouttest.dto.AnswerRequest
+import com.burnoutstopper.burnouttest.dto.AnswerResponse
 import com.burnoutstopper.burnouttest.dto.ResultUserDto
 import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
@@ -20,10 +21,10 @@ class AnswerController @Autowired constructor(private val service: AnswerService
     @PostMapping
     fun saveAnswer(
         @RequestBody answerRequest: AnswerRequest,
-    ): ResponseEntity<Map<String, Any>> {
+    ): ResponseEntity<AnswerResponse> {
         val (result, currenToken) = service.saveAnswer(answerRequest.token, answerRequest.answer)
         val dto = convertToDto(result)
-        val response = mapOf("result" to dto, "token" to currenToken)
+        val response = AnswerResponse(currenToken, dto)
         return ResponseEntity(response, HttpStatus.OK)
     }
 
