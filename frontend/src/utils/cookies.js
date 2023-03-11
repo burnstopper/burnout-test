@@ -5,7 +5,7 @@ const CookieLib = {
         return Cookies.get("token")
     },
     setCookieToken: (token) => {
-        Cookies.set("token", token, { expires: 365, secure: true })
+        Cookies.set("token", token, { expires: 365 })
     },
     removeCookie: () => {
         Cookies.remove("token", { secure: true })

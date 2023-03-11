@@ -55,7 +55,8 @@ const Test = ({ quizData, setResults, setToken }) => {
         const date = new Date().toISOString()
         console.log(date)
         const token =
-            CookieLib.getCookieToken() == "undefined"
+            CookieLib.getCookieToken() == "undefined" ||
+            !CookieLib.getCookieToken()
                 ? ""
                 : CookieLib.getCookieToken()
         console.log(token)
@@ -102,6 +103,7 @@ const Test = ({ quizData, setResults, setToken }) => {
             )
             console.log(response)
             setResults(response.data)
+            console.log(response.data.token)
             CookieLib.setCookieToken(response.data.token)
             setToken(response.data.token)
             setState("finished")
