@@ -38,7 +38,7 @@ constructor(
     override fun getResults(token: String): List<Result> {
         // val id = Utils.getRespondentId(token) TODO uncomment after integration with respondent microservice
         val id = tempRepo.findByToken(token).id!!
-        return resultRepository.findAllByRespondentId(id)
+        return resultRepository.findAllByRespondentIdOrderByDateTimeDesc(id)
     }
 
     private fun calculateResult(answer: Answer): Result {
