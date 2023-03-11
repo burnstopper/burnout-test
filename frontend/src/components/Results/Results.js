@@ -27,29 +27,37 @@ const Results = ({ results }) => {
                 <tbody>
                     <tr>
                         <td>Эмоциональное истощение </td>
-                        <td>{results?.exhaustion}</td>
-                        <td>{mappingResults[results?.exhaustion_level]}</td>
-                        <td>{results?.exhaustion_percent}%</td>
+                        <td>{results?.result?.exhaustion}</td>
+                        <td>
+                            {mappingResults[results?.result?.exhaustion_level]}
+                        </td>
+                        <td>{results?.result?.exhaustion_percent}%</td>
                     </tr>
                     <tr>
                         <td>Деперсонализация </td>
-                        <td>{results?.depersonalization}</td>
+                        <td>{results?.result?.depersonalization}</td>
                         <td>
-                            {mappingResults[results?.depersonalization_level]}
+                            {
+                                mappingResults[
+                                    results?.result?.depersonalization_level
+                                ]
+                            }
                         </td>
-                        <td>{results?.depersonalization_percent}%</td>
+                        <td>{results?.result?.depersonalization_percent}%</td>
                     </tr>
                     <tr>
                         <td>Редукция профессионализма</td>
-                        <td>{results?.reduction}</td>
-                        <td>{mappingResults[results?.reduction_level]}</td>
-                        <td>{results?.reduction_percent}%</td>
+                        <td>{results?.result?.reduction}</td>
+                        <td>
+                            {mappingResults[results?.result?.reduction_level]}
+                        </td>
+                        <td>{results?.result?.reduction_percent}%</td>
                     </tr>
                     <tr>
                         <td>Интегральный индекс выгорания</td>
-                        <td>{results?.integral_index}</td>
+                        <td>{results?.result?.integral_index}</td>
                         <td></td>
-                        <td>{results?.integral_index_percent}%</td>
+                        <td>{results?.result?.integral_index_percent}%</td>
                     </tr>
                 </tbody>
             </Table>

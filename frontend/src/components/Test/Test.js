@@ -60,32 +60,36 @@ const Test = ({ quizData, setResults, setToken }) => {
                 : CookieLib.getCookieToken()
         console.log(token)
         const data = {
-            date_time: date,
-            quiz_id: 0,
-            answer1: mappingAnswers[answers[0]],
-            answer2: mappingAnswers[answers[1]],
-            answer3: mappingAnswers[answers[2]],
-            answer4: mappingAnswers[answers[3]],
-            answer5: mappingAnswers[answers[4]],
-            answer6: mappingAnswers[answers[5]],
-            answer7: mappingAnswers[answers[6]],
-            answer8: mappingAnswers[answers[7]],
-            answer9: mappingAnswers[answers[8]],
-            answer10: mappingAnswers[answers[9]],
-            answer11: mappingAnswers[answers[10]],
-            answer12: mappingAnswers[answers[11]],
-            answer13: mappingAnswers[answers[12]],
-            answer14: mappingAnswers[answers[13]],
-            answer15: mappingAnswers[answers[14]],
-            answer16: mappingAnswers[answers[15]],
-            answer17: mappingAnswers[answers[16]],
-            answer18: mappingAnswers[answers[17]],
-            answer19: mappingAnswers[answers[18]],
-            answer20: mappingAnswers[answers[19]],
-            answer21: mappingAnswers[answers[20]],
-            answer22: mappingAnswers[answers[21]],
+            token: token,
+            answer: {
+                date_time: date,
+                quiz_id: 0,
+                answer1: mappingAnswers[answers[0]],
+                answer2: mappingAnswers[answers[1]],
+                answer3: mappingAnswers[answers[2]],
+                answer4: mappingAnswers[answers[3]],
+                answer5: mappingAnswers[answers[4]],
+                answer6: mappingAnswers[answers[5]],
+                answer7: mappingAnswers[answers[6]],
+                answer8: mappingAnswers[answers[7]],
+                answer9: mappingAnswers[answers[8]],
+                answer10: mappingAnswers[answers[9]],
+                answer11: mappingAnswers[answers[10]],
+                answer12: mappingAnswers[answers[11]],
+                answer13: mappingAnswers[answers[12]],
+                answer14: mappingAnswers[answers[13]],
+                answer15: mappingAnswers[answers[14]],
+                answer16: mappingAnswers[answers[15]],
+                answer17: mappingAnswers[answers[16]],
+                answer18: mappingAnswers[answers[17]],
+                answer19: mappingAnswers[answers[18]],
+                answer20: mappingAnswers[answers[19]],
+                answer21: mappingAnswers[answers[20]],
+                answer22: mappingAnswers[answers[21]],
+            },
         }
         console.log(data)
+
         try {
             const response = await axios.post(
                 "http://burnout.westeurope.cloudapp.azure.com/api/v1/answers",
@@ -93,17 +97,13 @@ const Test = ({ quizData, setResults, setToken }) => {
                 {
                     headers: {
                         "Content-Type": "application/json",
-                        token: token,
                     },
                 }
             )
             console.log(response)
-            console.log(response.headers)
-            console.log(response.headers["content-type"])
-            console.log(response.headers["token"])
             setResults(response.data)
-            // CookieLib.setCookieToken(response.data.token)
-            // setToken(response.data.token)
+            CookieLib.setCookieToken(response.data.token)
+            setToken(response.data.token)
             setState("finished")
         } catch (error) {
             console.error(error)
