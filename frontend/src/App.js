@@ -20,6 +20,8 @@ function App() {
 
     const [showHistory, setShowHistory] = useState(false)
 
+    const [historyResults, setHistoryResults] = useState(null)
+
     const handleClick = () => {
         setShowTest(true)
     }
@@ -44,10 +46,13 @@ function App() {
                     }
                 )
                 console.log(response.data)
+                setHistoryResults(response.data)
                 return response.data
             } catch (error) {
                 console.error(error)
             }
+        } else {
+            setHistoryResults(null)
         }
     }
 
@@ -65,7 +70,7 @@ function App() {
                     <Pretest handleClick={handleClick} />
                 )}
 
-                <Results results={results} />
+                <Results results={results?.result || results} />
                 <div className="historybtn">
                     <Button variant="success" onClick={handleHistoryClick}>
                         История
@@ -75,6 +80,7 @@ function App() {
                     <History
                         setResults={setResults}
                         loadHistory={loadHistory}
+                        historyResults={historyResults}
                     />
                 ) : (
                     <></>

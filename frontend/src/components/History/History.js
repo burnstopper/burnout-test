@@ -5,10 +5,8 @@ import axios from "axios"
 import "./History.css"
 import CookieLib from "../../utils/cookies"
 
-const History = ({ setResults, loadHistory }) => {
+const History = ({ setResults, loadHistory, historyResults }) => {
     const [showSpinner, setShowSpinner] = useState(false)
-
-    const [historyResults, setHistoryResults] = useState(null)
 
     const onUpdateHandler = async () => {
         setShowSpinner(true)
@@ -46,18 +44,18 @@ const History = ({ setResults, loadHistory }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <HistoryElement
-                        id={1}
-                        date={"08.03.23 12:30:45"}
-                        index={"50%"}
-                        setResults={setResults}
-                    />
-                    <HistoryElement
-                        id={2}
-                        date={"07.12.22 18:00:17"}
-                        index={"100%"}
-                        setResults={setResults}
-                    />
+                    {historyResults !== null && historyResults ? (
+                        historyResults.map((result, index) => (
+                            <HistoryElement
+                                key={index}
+                                id={index + 1}
+                                results={result}
+                                setResults={setResults}
+                            />
+                        ))
+                    ) : (
+                        <p>...</p>
+                    )}
                 </tbody>
             </Table>
         </div>

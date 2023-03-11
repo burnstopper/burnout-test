@@ -19,7 +19,7 @@ const Settings = ({ toggleMode, setToken }) => {
                 <Dropdown.Item onClick={toggleMode}>
                     Режим тестировщика
                 </Dropdown.Item>
-                <Dropdown.Item onClicl={resetCookie}>
+                <Dropdown.Item onClick={resetCookie}>
                     Удалить данные
                 </Dropdown.Item>
             </Dropdown.Menu>
