@@ -5,7 +5,7 @@ import org.hibernate.annotations.GenericGenerator
 
 //TODO will be removed after integration with respondent microservice
 @Entity
-@Table(name = "temp_respondents")
+@Table(schema = "respondent", name = "respondents")
 data class TempRespondent(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
