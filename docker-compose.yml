@@ -1,11 +1,9 @@
-version: "3.8"
+version: "3.3"
 
 services:
-  backend:
-    container_name: backend
-    image: ghcr.io/burnstopper/burnout-backend
-#    build:
-#      context: ./backend
+  burnout-backend:
+    container_name: burnout-backend
+    image: ghcr.io/burnstopper/burnout-backend:2.6
     networks:
       - local-net
     env_file:
@@ -16,9 +14,7 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
   frontend:
     container_name: frontend
-    image: ghcr.io/burnstopper/burnout-frontend
-#    build:
-#      context: ./frontend
+    image: ghcr.io/burnstopper/burnout-frontend:2.7
     networks:
       - local-net
     ports:
