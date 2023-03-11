@@ -1,47 +1,41 @@
 package com.burnoutstopper.burnouttest.service
 
+import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.*
 import com.burnoutstopper.burnouttest.repository.AnswerRepository
 import com.burnoutstopper.burnouttest.repository.TempRespondentRepository
-import com.burnoutstopper.burnouttest.util.Utils
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestTemplate
-import org.springframework.web.client.exchange
+import org.springframework.web.bind.annotation.ValueConstants
 import java.util.UUID
 
 @Service
 class AnswerServiceImpl @Autowired
 constructor(
-    private val repository: AnswerRepository,
-    private val service: ResultService,
+    private val answerRepository: AnswerRepository,
+    private val resultService: ResultService,
     private val tempRepo: TempRespondentRepository
 ) : AnswerService {
 
-    override fun saveAnswer(token: String, answer: Answer): SaveResponse {
-
+    override fun saveAnswer(token: String, answer: Answer): Pair<Result, String> {
+        var currentToken = token
         val respondent = if (token.isBlank()) {
-            tempRepo.save(TempRespondent(token = UUID.randomUUID().toString()))
-//            Utils.createRespondent() TODO uncomment
+            currentToken = UUID.randomUUID().toString()
+            tempRepo.save(TempRespondent(token = currentToken))
+//            Utils.createRespondent() TODO uncomment after integration with respondent microservice
         } else {
-//            val id = Utils.getRespondentId(token) TODO uncomment
-            val id = tempRepo.findByToken(token).id
-            TempRespondent(id, token)
+//            val id = Utils.getRespondentId(token) TODO uncomment after integration with respondent microservice
+            val id = tempRepo.findByToken(currentToken).id
+            TempRespondent(id, currentToken)
         }
         answer.respondentId = respondent.id!!
-        repository.save(answer)
-        val result = service.calculateResult(answer)
-
-        return SaveResponse(result, respondent.token)
+        answerRepository.save(answer)
+        return resultService.saveResult(answer) to currentToken
     }
 
-    override fun getAllAnswers(): List<Answer> = repository.findAll()
-
-    override fun getRespondentAnswer(token: String): Answer {
+    override fun getAnswer(token: String): Answer {
         val id = tempRepo.findByToken(token).id!!
-//        val id = Utils.getRespondentId(token) TODO uncomment
-        return repository.findByRespondentId(id)
+        //  val id = Utils.getRespondentId(token) TODO uncomment after integration with respondent microservice
+        return answerRepository.findByRespondentId(id)
     }
 }

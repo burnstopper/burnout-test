@@ -1,30 +1,40 @@
 package com.burnoutstopper.burnouttest.controller
 
+import com.burnoutstopper.burnouttest.dto.AnswerRequest
+import com.burnoutstopper.burnouttest.dto.AnswerResponse
+import com.burnoutstopper.burnouttest.dto.ResultUserDto
 import com.burnoutstopper.burnouttest.model.Answer
 import com.burnoutstopper.burnouttest.model.Result
-import com.burnoutstopper.burnouttest.model.SaveResponse
 import com.burnoutstopper.burnouttest.service.AnswerService
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-
+import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 @CrossOrigin
 @RestController
-@RequestMapping("/answer")
+@RequestMapping("/api/v1/answers")
 class AnswerController @Autowired constructor(private val service: AnswerService) {
 
-    //TODO Authorization Header can be empty or null
-    @PostMapping("/save-answer")
+    @PostMapping
     fun saveAnswer(
-        @RequestHeader(name = "Authorization", required = false, defaultValue = "") token: String,
-        @RequestBody answer: Answer
-    ): SaveResponse {
-        return service.saveAnswer(token, answer)
+        @RequestBody answerRequest: AnswerRequest,
+    ): ResponseEntity<AnswerResponse> {
+        val (result, currenToken) = service.saveAnswer(answerRequest.token, answerRequest.answer)
+        val dto = convertToDto(result)
+        val response = AnswerResponse(currenToken, dto)
+        return ResponseEntity(response, HttpStatus.OK)
     }
 
-    @GetMapping("/respondent")
-    fun getRespondentAnswer(@RequestHeader("Authorization") token: String): Answer = service.getRespondentAnswer(token)
-
-    @GetMapping("/all")
-    fun getAllAnswers(): List<Answer> = service.getAllAnswers()
+    private fun convertToDto(result: Result): ResultUserDto {
+        return ResultUserDto(
+            dateTime = result.dateTime,
+            exhaustion = result.exhaustion,
+            depersonalization = result.depersonalization,
+            reduction = result.reduction,
+            integralIndex = result.integralIndex
+        )
+    }
 }
