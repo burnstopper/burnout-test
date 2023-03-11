@@ -41,6 +41,13 @@ constructor(
         return resultRepository.findAllByRespondentIdOrderByDateTimeDesc(id)
     }
 
+    override fun getByQuizAndRespondent(quizId: Int, respondentId: Int?): List<Result> {
+        if (respondentId == null) {
+            return resultRepository.findAllByQuizId(quizId)
+        }
+        return resultRepository.findAllByQuizIdAndRespondentId(respondentId, quizId)
+    }
+
     private fun calculateResult(answer: Answer): Result {
         val exhaustionSum = exhaustionSum(answer)
         val depersonalizationSum = depersonalizationSum(answer)

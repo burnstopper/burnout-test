@@ -21,6 +21,17 @@ class ResultController @Autowired constructor(private val service: ResultService
         return ResponseEntity(results, HttpStatus.OK)
     }
 
+    @GetMapping("/by-quiz-and-respondent")
+    fun getResultsByRespondentAndQuiz(
+        @RequestParam("quiz_id") quizId: Int,
+        @RequestParam("respondent_id", required = false) respondentId: Int?,
+    ): ResponseEntity<List<ResultResearcherDto>> {
+        val results =
+            service.getByQuizAndRespondent(quizId, respondentId).parallelStream().map { convertToResultDto(it) }
+                .toList()
+        return ResponseEntity(results, HttpStatus.OK)
+    }
+
     @GetMapping("/recent")
     fun getRecentResults(
         @RequestHeader("Authorization", required = false) authorizationHeader: String, //TODO change to required = true
