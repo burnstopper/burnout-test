@@ -90,10 +90,10 @@ const Test = ({ quizData, setResults, setToken }) => {
             },
         }
         console.log(data)
-
+        console.log(`${process.env.REACT_APP_HOST_NAME}/api/v1/answers`)
         try {
             const response = await axios.post(
-                "http://burnout.westeurope.cloudapp.azure.com/api/v1/answers",
+                `${process.env.REACT_APP_HOST_NAME}/api/v1/answers`,
                 data,
                 {
                     headers: {

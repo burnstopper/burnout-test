@@ -35,10 +35,13 @@ function App() {
 
     const loadHistory = async () => {
         const token = CookieLib.getCookieToken()
+        console.log(
+            `${process.env.REACT_APP_HOST_NAME}/api/v1/results?token=${token}`
+        )
         if (token && token !== "undefined") {
             try {
                 const response = await axios.get(
-                    `http://burnout.westeurope.cloudapp.azure.com//api/v1/results?token=${token}`,
+                    `${process.env.REACT_APP_HOST_NAME}/api/v1/results?token=${token}`,
                     {
                         headers: {
                             "Content-Type": "application/json",
