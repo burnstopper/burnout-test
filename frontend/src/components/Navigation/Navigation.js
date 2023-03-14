@@ -9,11 +9,6 @@ const Navigation = () => {
     const href3 = process.env.REACT_APP_MENU_3
     const href4 = process.env.REACT_APP_MENU_4
 
-    console.log(href1)
-    console.log(href2)
-    console.log(href3)
-    console.log(href4)
-
     return (
         <Navbar className="navigation">
             <Container>
