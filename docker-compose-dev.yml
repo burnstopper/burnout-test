@@ -3,24 +3,29 @@ version: "3.3"
 services:
   burnout-backend:
     container_name: burnout-backend
-    image: ghcr.io/burnstopper/burnout-backend:2.6
-    networks:
-      - local-net
-    env_file:
-      - .env
+    build: ./backend
     environment:
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-  frontend:
-    container_name: frontend
-    image: ghcr.io/burnstopper/burnout-frontend:2.7
     networks:
       - local-net
+
+  burnout-nginx:
+    container_name: burnout-nginx
+    build:
+      context: ./
+      args:
+        BURNOUT_HOST_NAME: ${BURNOUT_HOST_NAME}
+    environment:
+      BURNOUT_HOST_NAME: ${BURNOUT_HOST_NAME}
+      BURNOUT_PORT: ${BURNOUT_PORT}
     ports:
-      - "80:80"
+      - "${BURNOUT_PORT}:${BURNOUT_PORT}"
     depends_on:
-      - backend
+      - burnout-backend
+    networks:
+      - local-net
 
 networks:
   local-net:
